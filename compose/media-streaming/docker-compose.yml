@@ -1,0 +1,129 @@
+version: '3.3'
+services:
+  plex:
+    image: 'ghcr.io/linuxserver/plex:latest'
+    container_name: krisplex
+    hostname: krisplex.local.lan
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - VERSION=docker
+      - PLEX_CLAIM=claim-mTWj5wTBy3w2UY3xqD_x  
+    volumes:
+      - '$DOCKERDIR/plex:/config'
+      - '/media/:/media'
+    ports:
+      - '32400:32400'
+    devices:
+      - '/dev/dri:/dev/dri'
+    privileged: true
+    restart: unless-stopped
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr
+    container_name: sonarr
+    hostname: sonarr.local.lan
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - '$DOCKERDIR/sonarr:/config'
+      - '/media:/media'
+    ports:
+      - '8989:8989'
+    restart: unless-stopped
+  radarr:
+    image: ghcr.io/linuxserver/radarr
+    container_name: radarr
+    hostname: radarr.local.lan
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - '$DOCKERDIR/radarr:/config'
+      - '/media:/media'
+    ports:
+      - '7878:7878'
+    restart: unless-stopped
+  qbittorrent:
+    image: ghcr.io/linuxserver/qbittorrent
+    container_name: qbittorrent
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+      - UMASK_SET=022
+      - WEBUI_PORT=8181
+    volumes:
+      - '$DOCKERDIR/qbittorrent:/config'
+      - '/media:/media'
+    ports:
+      - '6881:6881'
+      - '6881:6881/udp'
+      - '8181:8181'
+    restart: unless-stopped
+    mem_limit: 1024m
+    mem_reservation: 64m
+  prowlarr:
+    image: 'ghcr.io/linuxserver/prowlarr:develop'
+    container_name: prowlarr
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - '$DOCKERDIR/prowlarr:/config'
+    ports:
+      - '9696:9696'
+    mem_limit: 128m
+    mem_reservation: 64m
+    restart: unless-stopped
+  heimdall:
+    image: lscr.io/linuxserver/heimdall
+    container_name: heimdall
+    hostname: heimdall.local.lan
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - $DOCKERDIR/heimdall:/config
+    ports:
+      - 8082:80
+      - 8083:443       
+    restart: unless-stopped
+  overseerr:
+    container_name: overseerr
+    image: lscr.io/linuxserver/overseerr:latest
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TZ
+    volumes:
+      - '$DOCKERDIR/overseerr:/config'
+    ports:
+      - '5055:5055'
+  pihole:
+    container_name: pihole
+    hostname: pihole.local.lan
+    image: pihole/pihole:latest
+    #    ports:
+    #  - "53:53/tcp"
+    #  - "53:53/udp"
+    #  - "67:67/udp"
+    #  - "8585:8585/tcp"  
+    environment:
+      TZ: $TZ
+      ServerIP: "192.168.0.155"
+      PIHOLE_DOMAIN: "rpi4.local"
+      DNSMASQ_LISTENING: "all"
+      WEB_PORT: "8585"
+      WEBPASSWORD: $WEBPASSWORD
+      VIRTUAL_HOST: "pihole.local.lan"
+    volumes:
+      - "$DOCKERDIR/pihole/:/etc/pihole/:rw"
+      - "$DOCKERDIR/pihole/dnsmasq.d:/etc/dnsmasq.d/:rw"
+    restart: unless-stopped
+    mem_limit: 200m
+    mem_reservation: 64m
