@@ -10,8 +10,8 @@ services:
       - VERSION=docker
       - PLEX_CLAIM=claim-mTWj5wTBy3w2UY3xqD_x  
     volumes:
-      - '$DOCKERDIR/plex:/config'
-      - '/media/:/media'
+      - '$DOCKERDIR/config/plex:/config'
+      - '$DOCKERDIR/media:/media'
     ports:
       - '32400:32400'
     devices:
@@ -27,8 +27,8 @@ services:
       - PGID=$PGID
       - TZ=$TZ
     volumes:
-      - '$DOCKERDIR/sonarr:/config'
-      - '/media:/media'
+      - '$DOCKERDIR/config/sonarr:/config'
+      - '$DOCKERDIR/media:/data'
     ports:
       - '8989:8989'
     restart: unless-stopped
@@ -41,8 +41,8 @@ services:
       - PGID=$PGID
       - TZ=$TZ
     volumes:
-      - '$DOCKERDIR/radarr:/config'
-      - '/media:/media'
+      - '$DOCKERDIR/config/radarr:/config'
+      - '$DOCKERDIR/media:/data'
     ports:
       - '7878:7878'
     restart: unless-stopped
@@ -56,8 +56,9 @@ services:
       - UMASK_SET=022
       - WEBUI_PORT=8181
     volumes:
-      - '$DOCKERDIR/qbittorrent:/config'
-      - '/media:/media'
+      - '$DOCKERDIR/config/qbittorrent:/config'
+      - '$DOCKERDIR/torrents:/data/torrents'
+      - '$DOCKERDIR/torrents/incomplete:/downloads/incomplete' 
     ports:
       - '6881:6881'
       - '6881:6881/udp'
@@ -73,7 +74,7 @@ services:
       - PGID=$PGID
       - TZ=$TZ
     volumes:
-      - '$DOCKERDIR/prowlarr:/config'
+      - '$DOCKERDIR/config/prowlarr:/config'
     ports:
       - '9696:9696'
     mem_limit: 128m
@@ -88,7 +89,7 @@ services:
       - PGID=$PGID
       - TZ=$TZ
     volumes:
-      - $DOCKERDIR/heimdall:/config
+      - '$DOCKERDIR/config/heimdall:/config'
     ports:
       - 8082:80
       - 8083:443       
@@ -101,7 +102,7 @@ services:
       - PGID=$PGID
       - TZ=$TZ
     volumes:
-      - '$DOCKERDIR/overseerr:/config'
+      - '$DOCKERDIR/config/overseerr:/config'
     ports:
       - '5055:5055'
   pihole:
@@ -122,8 +123,8 @@ services:
       WEBPASSWORD: $WEBPASSWORD
       VIRTUAL_HOST: "pihole.local.lan"
     volumes:
-      - "$DOCKERDIR/pihole/:/etc/pihole/:rw"
-      - "$DOCKERDIR/pihole/dnsmasq.d:/etc/dnsmasq.d/:rw"
+      - "$DOCKERDIR/config/pihole/:/etc/pihole/:rw"
+      - "$DOCKERDIR/config/pihole/dnsmasq.d:/etc/dnsmasq.d/:rw"
     restart: unless-stopped
     mem_limit: 200m
     mem_reservation: 64m
