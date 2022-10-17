@@ -8,10 +8,10 @@ services:
       - PUID=$PUID
       - PGID=$PGID
       - VERSION=docker
-      - PLEX_CLAIM=claim-mTWj5wTBy3w2UY3xqD_x  
+      - PLEX_CLAIM=claim--spKyyLWgVfT242wKTFj  
     volumes:
       - '$DOCKERDIR/config/plex:/config'
-      - '$DOCKERDIR/media:/media'
+      - '$DOCKERDIR/media:/data/media'
     ports:
       - '32400:32400'
     devices:
@@ -28,7 +28,7 @@ services:
       - TZ=$TZ
     volumes:
       - '$DOCKERDIR/config/sonarr:/config'
-      - '$DOCKERDIR/media:/data'
+      - '$DOCKERDIR:/data'
     ports:
       - '8989:8989'
     restart: unless-stopped
@@ -42,7 +42,7 @@ services:
       - TZ=$TZ
     volumes:
       - '$DOCKERDIR/config/radarr:/config'
-      - '$DOCKERDIR/media:/data'
+      - '$DOCKERDIR:/data'
     ports:
       - '7878:7878'
     restart: unless-stopped
@@ -58,7 +58,7 @@ services:
     volumes:
       - '$DOCKERDIR/config/qbittorrent:/config'
       - '$DOCKERDIR/torrents:/data/torrents'
-      - '$DOCKERDIR/torrents/incomplete:/downloads/incomplete' 
+      - '$DOCKERDIR/torrents/incomplete:/downloads/incomplete'  
     ports:
       - '6881:6881'
       - '6881:6881/udp'
