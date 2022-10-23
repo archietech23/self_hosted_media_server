@@ -8,7 +8,7 @@ services:
       - PUID=$PUID
       - PGID=$PGID
       - VERSION=docker
-      - PLEX_CLAIM=claim--spKyyLWgVfT242wKTFj  
+      - PLEX_CLAIM=XXX 
     volumes:
       - '$DOCKERDIR/config/plex:/config'
       - '$DOCKERDIR/media:/data/media'
