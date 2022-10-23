@@ -107,7 +107,7 @@ services:
       - '5055:5055'
   pihole:
     container_name: pihole
-    hostname: pihole.local.lan
+    hostname: XXX
     image: pihole/pihole:latest
     #    ports:
     #  - "53:53/tcp"
@@ -116,8 +116,8 @@ services:
     #  - "8585:8585/tcp"  
     environment:
       TZ: $TZ
-      ServerIP: "192.168.0.155"
-      PIHOLE_DOMAIN: "rpi4.local"
+      ServerIP: "XXX"
+      PIHOLE_DOMAIN: "XXX"
       DNSMASQ_LISTENING: "all"
       WEB_PORT: "8585"
       WEBPASSWORD: $WEBPASSWORD
