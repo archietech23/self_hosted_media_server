@@ -4,7 +4,7 @@
 ![plex logo](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Plex_logo_2022.svg/320px-Plex_logo_2022.svg.png)
 
 </br>
-This repository contains a self-hosted personal streaming service powered by Docker and Plex. It is inspired by a guide I found on Reddit: [The complete guide to building your personal self hosted server for streaming and ad-blocking powered by Plex, Jellyfin, Adguard Home and Docker.](https://www.reddit.com/r/Piracy/comments/pqsomd/the_complete_guide_to_building_your_personal_self/)
+This repository contains a self-hosted personal streaming service powered by Docker and Plex. It is inspired by a guide I found on Reddit: https://www.reddit.com/r/Piracy/comments/pqsomd/the_complete_guide_to_building_your_personal_self/
 
 ## Project Overview
 The main objective of this project is to apply my theoretical knowledge of Linux and Linux kernels, features such as cgroups, Union File Systems (UFS), and namespaces. By leveraging Docker and Plex, I aim to create an efficient and isolated streaming environment for my personal media content.
